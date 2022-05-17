@@ -1,3 +1,30 @@
+# moje wypociny na vagrant 
+	1. kubectl create ns jenkins
+	2. Klonujemy repo gitowe i zgrywamy folder jenkins na kubernetesa mastera
+	3. I dpalamy jamle z folderu 
+	4.  kubectl -n jenkins apply -f /home/vagrant/jenkins
+	5. kubectl -n jenkins get pods	Na namespace jenkins bedą sie budować kontenery
+	jenkins$ kubectl -n jenkins get svc	
+	 kubectl -n jenkins get svc
+	NAME      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                     AGE
+	jenkins   ClusterIP   10.106.201.24   <none>        8080/TCP,50000/TCP,80/TCP   135m
+	vagrant@kubemaster:~/jenkins$ kubectl -n jenkins get pods
+	NAME                      READY   STATUS    RESTARTS   AGE
+	jenkins-b4d464798-rwjkb   1/1     Running   0          135m
+	
+	Patrzymy w loga aby pobrać klucz do jenkinsa
+	9e4793f6bfcb46aba744fc6f90bbf5ce
+	I robimy forward  svc na duzy port 
+	
+	 kubectl -n jenkins expose pod jenkins-b4d464798-rwjkb --name jenkins --type NodePort --port 8080 --target-port 8080
+	kubectl get all patrzymy na port svc  ten duzy i wpbijamy po adresie ip do nginx
+	http://192.168.56.2:31045/
+	
+Instalujemy sugerowane pluginny i pluggin kubernetes This plugin integrates Jenkins with Kubernetes
+![image](https://user-images.githubusercontent.com/25319617/168824358-22829257-0819-49f1-874c-0603be6b5635.png)
+
+
+
 
 # Jenkins on Amazon Kubernetes
 
